@@ -6,11 +6,23 @@ interface Produto {
   name: string;
   price: number;
   quantity: number;
-  categories: string;
+  category: string;
+  description: string;
 }
 
 function Menu() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
+
+  const formatarCategoria = (cat: string) => {
+  const mapa: Record<string, string> = {
+    ESPETINHOS: "ESPETINHOS",
+    BEBIDA: "BEBIDAS",
+    PORCOES: "PORÇÕES",
+    BEBIDAS_ALCOOLICAS: "BEBIDAS ALCOÓLICAS"
+  };
+
+  return mapa[cat] || cat;
+};
 
   useEffect(() => {
     fetch("http://localhost:8083/product/list")
@@ -19,8 +31,9 @@ function Menu() {
       .catch((err) => console.error(err));
   }, []);
 
-  const produtosPorCategoria = produtos.reduce((acc, produto) => {
-    const categoria = produto.categories;
+  const produtosPorCategoria = Array.isArray(produtos) 
+  ? produtos.reduce((acc, produto) => {
+    const categoria = produto.category;
 
     if (!acc[categoria]) {
       acc[categoria] = [];
@@ -29,7 +42,8 @@ function Menu() {
     acc[categoria].push(produto);
 
     return acc;
-  }, {} as Record<string, Produto[]>);
+  }, {} as Record<string, Produto[]>)
+  : {};
 
   return (
     <>
@@ -41,12 +55,17 @@ function Menu() {
         <div className="itens">
           {Object.entries(produtosPorCategoria).map(([categoria, itens]) => (
             <div key={categoria}>
-              <h2>{categoria}</h2>
+              <h2>{formatarCategoria(categoria)}</h2>
 
               {itens.map((produto) => (
                 <div className="item" key={produto.id}>
-                  <h3>{produto.name}</h3>
+                  <div className="info">
+                    <h3>{produto.name}</h3>
+                    <p>{produto.description}</p>
+                  </div>
                   <span>R$ {produto.price}</span>
+                  
+            
                 </div>
               ))}
             </div>
