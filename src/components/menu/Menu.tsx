@@ -6,7 +6,8 @@ interface Produto {
   name: string;
   price: number;
   quantity: number;
-  categories: string;
+  description: string;
+  category: string;
 }
 
 function Menu() {
@@ -20,7 +21,7 @@ function Menu() {
   }, []);
 
   const produtosPorCategoria = produtos.reduce((acc, produto) => {
-    const categoria = produto.categories;
+    const categoria = produto.category;
 
     if (!acc[categoria]) {
       acc[categoria] = [];
@@ -46,7 +47,9 @@ function Menu() {
               {itens.map((produto) => (
                 <div className="item" key={produto.id}>
                   <h3>{produto.name}</h3>
+                  <h5>{produto.description}</h5>
                   <span>R$ {produto.price}</span>
+                 
                 </div>
               ))}
             </div>
