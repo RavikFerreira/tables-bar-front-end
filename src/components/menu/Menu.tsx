@@ -28,33 +28,60 @@ function Menu() {
     }
 
     acc[categoria].push(produto);
-
     return acc;
   }, {} as Record<string, Produto[]>);
+
+  const handleAddToCart = (produto: Produto) => {
+    console.log("Adicionado ao carrinho:", produto);
+  };
 
   return (
     <>
       <nav className="navbar">
-        <h1>🍔 Meu Cardápio</h1>
+        <h1>🛍️ Minha Loja</h1>
       </nav>
 
       <div className="menu">
-        <div className="itens">
-          {Object.entries(produtosPorCategoria).map(([categoria, itens]) => (
-            <div key={categoria}>
-              <h2>{categoria}</h2>
-
+        {Object.entries(produtosPorCategoria).map(([categoria, itens]) => (
+          <section key={categoria} className="categoria-section">
+            <h2 className="categoria-titulo">{categoria}</h2>
+            <div className="itens-grid">
               {itens.map((produto) => (
+<<<<<<< HEAD
                 <div className="item" key={produto.id}>
                   <h3>{produto.name}</h3>
                   <h5>{produto.description}</h5>
                   <span>R$ {produto.price}</span>
                  
+=======
+                <div className="item-card" key={produto.id}>
+                  <div className="item-info">
+                    <h3>{produto.name}</h3>
+                    <p className="item-desc">{produto.description}</p>
+                    <span className="item-estoque">
+                      {produto.quantity > 0
+                        ? `${produto.quantity} em estoque`
+                        : "Fora de estoque"}
+                    </span>
+                  </div>
+                  <div className="item-footer">
+                    <span className="item-preco">
+                      R$ {produto.price.toFixed(2)}
+                    </span>
+                    <button
+                      className="btn-add"
+                      disabled={produto.quantity === 0}
+                      onClick={() => handleAddToCart(produto)}
+                    >
+                      Adicionar
+                    </button>
+                  </div>
+>>>>>>> eae947bb06db76b0a75df2b50c22a4969f2b2b09
                 </div>
               ))}
             </div>
-          ))}
-        </div>
+          </section>
+        ))}
       </div>
     </>
   );
