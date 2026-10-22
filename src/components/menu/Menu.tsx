@@ -8,44 +8,43 @@ interface Produto {
   quantity: number;
   category: string;
   description: string;
-  description: string;
-  category: string;
 }
+
+const CATEGORIAS: Record<string, string> = {
+  ESPETINHOS: "ESPETINHOS",
+  BEBIDA: "BEBIDAS",
+  PORCOES: "PORÇÕES",
+  BEBIDAS_ALCOOLICAS: "BEBIDAS ALCOÓLICAS",
+};
+
+const formatarCategoria = (cat: string) => CATEGORIAS[cat] ?? cat;
+
+const formatarPreco = (valor: number | string) =>
+  Number(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
 function Menu() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
-
-  const formatarCategoria = (cat: string) => {
-  const mapa: Record<string, string> = {
-    ESPETINHOS: "ESPETINHOS",
-    BEBIDA: "BEBIDAS",
-    PORCOES: "PORÇÕES",
-    BEBIDAS_ALCOOLICAS: "BEBIDAS ALCOÓLICAS"
-  };
-
-  return mapa[cat] || cat;
-};
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("http://localhost:8083/product/list")
-      .then((res) => res.json())
-      .then((data) => setProdutos(data))
-      .catch((err) => console.error(err));
+      .then((res) => {
+        if (!res.ok) throw new Error(`Erro ${res.status} ao buscar produtos`);
+        return res.json();
+      })
+      .then((data) => setProdutos(Array.isArray(data) ? data : []))
+      .catch((err) => {
+        console.error(err);
+        setErro("Não foi possível carregar o cardápio.");
+      })
+      .finally(() => setCarregando(false));
   }, []);
 
-  const produtosPorCategoria = Array.isArray(produtos) 
-  ? produtos.reduce((acc, produto) => {
   const produtosPorCategoria = produtos.reduce((acc, produto) => {
-    const categoria = produto.category;
-
-    if (!acc[categoria]) {
-      acc[categoria] = [];
-    }
-
-    acc[categoria].push(produto);
+    (acc[produto.category] ??= []).push(produto);
     return acc;
-  }, {} as Record<string, Produto[]>)
-  : {};
+  }, {} as Record<string, Produto[]>);
 
   const handleAddToCart = (produto: Produto) => {
     console.log("Adicionado ao carrinho:", produto);
@@ -58,23 +57,16 @@ function Menu() {
       </nav>
 
       <div className="menu">
-        <div className="itens">
-          {Object.entries(produtosPorCategoria).map(([categoria, itens]) => (
-            <div key={categoria}>
-              <h2>{formatarCategoria(categoria)}</h2>
+        {carregando && <p className="mensagem">Carregando...</p>}
+        {erro && <p className="mensagem erro">{erro}</p>}
+        {!carregando && !erro && produtos.length === 0 && (
+          <p className="mensagem">Nenhum produto disponível.</p>
+        )}
 
-              {itens.map((produto) => (
-                <div className="item" key={produto.id}>
-                  <div className="info">
-                    <h3>{produto.name}</h3>
-                    <p>{produto.description}</p>
-                  </div>
-                  <span>R$ {produto.price}</span>
-                  
-            
         {Object.entries(produtosPorCategoria).map(([categoria, itens]) => (
           <section key={categoria} className="categoria-section">
-            <h2 className="categoria-titulo">{categoria}</h2>
+            <h2 className="categoria-titulo">{formatarCategoria(categoria)}</h2>
+
             <div className="itens-grid">
               {itens.map((produto) => (
                 <div className="item-card" key={produto.id}>
@@ -87,10 +79,9 @@ function Menu() {
                         : "Fora de estoque"}
                     </span>
                   </div>
+
                   <div className="item-footer">
-                    <span className="item-preco">
-                      R$ {produto.price.toFixed(2)}
-                    </span>
+                    <span className="item-preco">{formatarPreco(produto.price)}</span>
                     <button
                       className="btn-add"
                       disabled={produto.quantity === 0}
