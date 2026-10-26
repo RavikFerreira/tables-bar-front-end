@@ -145,7 +145,7 @@ function RegisterProducts() {
         description: newProduct.description,
       };
 
-    const url = idPut ? `http://localhost:8083/api/images/upload/${idPut}` :
+    const url = idPut ? `http://localhost:8083/api/images/upload  /${idPut}` :
                           "http://localhost:8083/product/addProduct/";
     const method = idPut ? "PATCH" : "POST";
       
