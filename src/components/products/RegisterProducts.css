@@ -1,0 +1,500 @@
+*{
+  box-sizing: border-box;
+}
+html, body, #root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body{
+  overflow: hidden;
+}
+
+.navbar {
+  width: 100%;
+  margin: 0 auto;
+  background-color: #ffd700;
+  color: rgb(0, 0, 0);
+  padding: 20px 40px;
+  border: 2px solid black;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.menu{
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  max-width: 1900px;
+  width: 100%;
+  margin: 0 auto;
+}
+.menu-button{
+  position: relative;
+  background-color: #ffd700;
+  border: 2px solid #000000;
+  color: #000000;
+  padding: 0.5rem 1.1rem;
+  border-radius:  6px;
+  cursor:  pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.menu-button-logout{
+  background-color: #ffd700;
+  border: 2px solid rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
+  padding: 0.5rem 1.1rem;
+  border-radius:  6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.5s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+.menu-overlay{
+  position: fixed;
+  top: 10;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 100;
+  display: flex;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+}
+
+.menu-sidebar{
+  background: #ffd700;
+  width: 300px;
+  height: 100%;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+  border: 2px solid rgb(0, 0, 0);
+  overflow-y: auto;
+
+}
+.menu-create-product{
+  background-color: #ffd700;
+  width: 100%;
+  height: 100%;
+}
+
+.button-create-product{
+  background-color: #ffd700;
+  color: #000000;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 1.4rem;
+  border-bottom: 1px solid #000000 ;
+}
+
+.search{
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.search-input{
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+.button-add{
+  background-color: #ffd700;
+  color: #000000;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius:  6px;
+  cursor: pointer;
+  white-space: nowrap;
+  
+}
+.loading,
+.empty {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  background: #ccc;
+  padding: 20px;
+}
+
+.table{
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: #ccc;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #000000 ;
+}
+
+.table th{
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #000000;
+  background-color: #ffd700;
+  border: 1px solid;
+}
+
+.table th:first-child,
+.table td {
+  width: 60px;
+  text-align: center;
+}
+
+.button-put,
+.button-delete{
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.button-put{
+  background-color: #ffd700;
+  color: #000000;
+}
+
+.button-put:hover{
+  background-color: #63560f;
+}
+
+.button-delete{
+  background-color: #ff0101;
+  color: #000000;
+}
+
+.button-delete:hover{
+  background-color: #9e0e0e;
+}
+
+.register-overlay{
+  top: 0;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
+
+.register-overlay form{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-overlay label{
+  font-size: 1rem;
+  color: #000000;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.register-overlay input{
+  padding: .8rem;
+  width: 100%;
+  border: 1px solid #000000;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.register-overlay input[type="file"] {
+  padding: 10px;
+  border: 1px dashed #b0b0b0;
+  background-color: #fafafa;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.register-overlay input:hover{
+  border-color: #7a7a7a;
+  background-color: #f0f0f0;
+}
+
+.register-overlay input[type="file"]::file-selector-button {
+  padding: 6px 12px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ffd700;
+  color: #000000;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.register-overlay input[type="file"]::file-selector-button:hover{
+  background-color: #333;
+}
+
+.footer{
+  width: 100;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.cancel{
+  background: #ffd700;
+  border: 1px solid #000000;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.save{
+  background-color: #0bbb46;
+  border: 1px solid #000000;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.save:hover{
+  background-color: #249c14;
+}
+.cancel:hover{
+  background-color: #b4b214;
+}
+
+.list-empty {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  background: #ccc;
+  padding: 20px;
+}
+
+.list-table{
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: #ccc;
+  border-collapse: collapse;
+}
+
+.list-table th,
+.list-table td {
+  text-align: left;
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid #000000 ;
+}
+
+.list-table th{
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #000000;
+  background-color: #ffd700;
+  border: 1px solid;
+}
+
+.list-table th:first-child,
+.list-table td:first-child {
+  width: 100px;
+  text-align: center;
+}
+
+.list-overlay{
+  width: 100%;
+  height: 20%;
+  display: flex;
+}
+
+.list-acoes{
+  display: flex;
+  gap: .3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+
+  .navbar {
+    padding: 15px 20px;
+  }
+
+  .navbar h1 {
+    font-size: 1.3rem;
+  }
+
+  .menu {
+    gap: 0.7rem;
+  }
+
+  .register-overlay {
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .search {
+    padding: 1.5rem;
+  }
+
+  .table {
+    min-width: 700px;
+  }
+
+  .list-table {
+    min-width: 700px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .navbar {
+    padding: 12px 15px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .navbar h1 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+
+  .menu {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .menu-button,
+  .menu-button-logout {
+    font-size: 0.85rem;
+    padding: 0.45rem 0.8rem;
+  }
+
+
+  .menu-sidebar {
+    width: 85%;
+    padding: 1rem;
+  }
+  .search {
+    width: 100%;
+    padding: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .button-add {
+    width: 100%;
+  }
+
+
+  .register-overlay {
+    width: 100%;
+    padding: 15px;
+    display: block;
+  }
+
+  .register-overlay form {
+    width: 100%;
+  }
+
+  .register-overlay input {
+    width: 100%;
+  }
+
+
+  .footer {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .cancel,
+  .save {
+    width: 100%;
+  }
+
+
+  .list-overlay {
+    width: 100%;
+    display: block;
+  }
+
+  .list-acoes {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .list-acoes button {
+    width: 100%;
+  }
+
+
+  .button-create-product {
+    width: 100%;
+    font-size: 1.1rem;
+  }
+
+
+
+  .table,
+  .list-table {
+    min-width: 650px;
+  }
+}
+
+@media (max-width: 400px) {
+
+  .navbar {
+    padding: 10px;
+  }
+
+  .navbar h1 {
+    font-size: 1rem;
+  }
+
+  .menu-button,
+  .menu-button-logout {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .search {
+    padding: 10px;
+  }
+
+  .register-overlay {
+    padding: 10px;
+  }
+
+  .table,
+  .list-table {
+    min-width: 600px;
+  }
+}
+
