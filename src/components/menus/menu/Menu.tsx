@@ -6,29 +6,43 @@ interface Product {
   name: string;
   price: number;
   quantity: number;
-  description: string;
   category: string;
+  description: string;
 }
 
-function Menu(){
+const CATEGORIES: Record<string, string> = {
+  ESPETINHOS: "ESPETINHOS",
+  BEBIDAS: "BEBIDAS",
+  PORCOES: "PORÇÕES",
+  BEBIDAS_ALCOOLICAS: "BEBIDAS ALCOÓLICAS",
+};
+
+const formatCategory = (category: string) => CATEGORIES[category] ?? category;
+
+const formatPrice = (value: number | string) =>
+  Number(value).toLocaleString("en-US", { style: "currency", currency: "BRL" });
+
+function Menu() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("http://localhost:8083/product/list")
-      .then((res) => res.json())
-      .then((data) => setProducts(data))
-      .catch((err) => console.error(err));
+      .then((res) => {
+        if (!res.ok) throw new Error(`Error ${res.status} while fetching products`);
+        return res.json();
+      })
+      .then((data) => setProducts(Array.isArray(data) ? data : []))
+      .catch((err) => {
+        console.error(err);
+        setError("Could not load the menu.");
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const productsByCategory = products.reduce((acc, product) => {
-    const category = product.category;
-
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-
-    acc[category].push(product);
+    (acc[product.category] ??= []).push(product);
     return acc;
   }, {} as Record<string, Product[]>);
 
@@ -40,47 +54,27 @@ function Menu(){
     <>
       <nav className="navbar">
         <h1>🛍️ My Store</h1>
-        
-        <input className="navbar-input"
-            type="text"
-            placeholder="Search for a product..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-        />
-
-        <button className='navbar-button'>Sair</button>
-
-        
       </nav>
 
       <div className="menu">
+        {loading && <p className="message">Carregando...</p>}
+        {error && <p className="message error">{error}</p>}
+        {!loading && !error && products.length === 0 && (
+          <p className="message">Não há produtos disponíveis.</p>
+        )}
+
         {Object.entries(productsByCategory).map(([category, items]) => (
-          <section key={category} className="categoria-section">
-            <h2 className="categoria-titulo">{category}</h2>
-            <div className="itens-grid">
+          <section key={category} className="category-section">
+            <h2 className="category-title">{formatCategory(category)}</h2>
+
+            <div className="items-grid">
               {items.map((product) => (
                 <div className="item-card" key={product.id}>
                   <div className="item-info">
                     <h3>{product.name}</h3>
-                    <p className="item-desc">{product.description}</p>
-                    <span className="item-estoque">
-                      {product.quantity > 0
-                        ? `${product.quantity} in stock`
-                        : "Out of stock"}
-                    </span>
+                    <span className="item-price">{formatPrice(product.price)}</span>
                   </div>
-                  <div className="item-footer">
-                    <span className="item-preco">
-                      $ {product.price.toFixed(2)}
-                    </span>
-                    <button
-                      className="btn-add"
-                      disabled={product.quantity === 0}
-                      onClick={() => handleAddToCart(product)}
-                    >
-                      Add
-                    </button>
-                  </div>
+                  <p className="item-desc">{product.description}</p>
                 </div>
               ))}
             </div>
