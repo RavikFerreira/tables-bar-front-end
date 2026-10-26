@@ -1,6 +1,6 @@
 .navbar {
-  background: #1f2937;
-  color: #fff;
+  background: #e6cf06;
+  color: #000000;
   padding: 16px 24px;
   position: sticky;
   top: 0;
@@ -13,91 +13,70 @@
 }
 
 .menu {
-  max-width: 1100px;
+  max-width: 70rem;
   margin: 0 auto;
   padding: 24px 16px;
+  border: 2px solid #e6cf06;
 }
 
-.mensagem {
+.message {
   text-align: center;
   color: #6b7280;
 }
 
-.mensagem.erro {
+.message.erro {
   color: #dc2626;
 }
 
-.categoria-section {
-  margin-bottom: 32px;
+.category-section {
+  margin-bottom: 20px;
+  color: #e6cf06;
 }
 
-.categoria-titulo {
-  border-bottom: 2px solid #e5e7eb;
-  padding-bottom: 8px;
-  margin-bottom: 16px;
+.category-section h2{
+  margin-bottom: 20px;
+}
+
+.category-title {
+  border-bottom: 2px solid #e6cf06;
   font-size: 1.2rem;
   letter-spacing: 0.05em;
 }
 
-.itens-grid {
-  display: grid;
+.items-grid {
+  display: flex;
+  flex-direction: column;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+  gap: 6px;
 }
 
 .item-card {
   display: flex;
   flex-direction: column;
+  gap: 0.1rem;
+}
+.item-info{
+  display: flex;
   justify-content: space-between;
-  gap: 12px;
-  padding: 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  align-items: center;
 }
 
 .item-info h3 {
-  margin: 0 0 6px;
-  font-size: 1.05rem;
+  margin: 0 0 4px;
+  font-size: 1.0rem;
+  color: #e5e7eb;
 }
 
 .item-desc {
-  margin: 0 0 8px;
-  color: #6b7280;
+  margin: 0 0 4px;
+  color: #776b03;
   font-size: 0.9rem;
 }
 
-.item-estoque {
-  font-size: 0.8rem;
-  color: #059669;
-}
-
-.item-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.item-preco {
+.item-price {
   font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.btn-add {
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 14px;
-  cursor: pointer;
-}
-
-.btn-add:hover:not(:disabled) {
-  background: #1d4ed8;
-}
-
-.btn-add:disabled {
-  background: #d1d5db;
-  cursor: not-allowed;
+  font-size: 1rem;
+  margin: 0 0 4px;
+  font-size: 1.0rem;
+  color: #e5e7eb;
 }
