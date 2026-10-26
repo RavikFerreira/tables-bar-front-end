@@ -1,104 +1,80 @@
 import './Menu.css';
 import { useEffect, useState } from "react";
 
-interface Produto {
+interface Product {
   id: number;
   name: string;
   price: number;
   quantity: number;
   category: string;
   description: string;
-  description: string;
-  category: string;
 }
 
-function Menu() {
-  const [produtos, setProdutos] = useState<Produto[]>([]);
-
-  const formatarCategoria = (cat: string) => {
-  const mapa: Record<string, string> = {
-    ESPETINHOS: "ESPETINHOS",
-    BEBIDA: "BEBIDAS",
-    PORCOES: "PORÇÕES",
-    BEBIDAS_ALCOOLICAS: "BEBIDAS ALCOÓLICAS"
-  };
-
-  return mapa[cat] || cat;
+const CATEGORIES: Record<string, string> = {
+  ESPETINHOS: "ESPETINHOS",
+  BEBIDAS: "BEBIDAS",
+  PORCOES: "PORÇÕES",
+  BEBIDAS_ALCOOLICAS: "BEBIDAS ALCOÓLICAS",
 };
+
+const formatCategory = (category: string) => CATEGORIES[category] ?? category;
+
+const formatPrice = (value: number | string) =>
+  Number(value).toLocaleString("en-US", { style: "currency", currency: "BRL" });
+
+function Menu() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("http://localhost:8083/product/list")
-      .then((res) => res.json())
-      .then((data) => setProdutos(data))
-      .catch((err) => console.error(err));
+      .then((res) => {
+        if (!res.ok) throw new Error(`Error ${res.status} while fetching products`);
+        return res.json();
+      })
+      .then((data) => setProducts(Array.isArray(data) ? data : []))
+      .catch((err) => {
+        console.error(err);
+        setError("Could not load the menu.");
+      })
+      .finally(() => setLoading(false));
   }, []);
 
-  const produtosPorCategoria = Array.isArray(produtos) 
-  ? produtos.reduce((acc, produto) => {
-  const produtosPorCategoria = produtos.reduce((acc, produto) => {
-    const categoria = produto.category;
-
-    if (!acc[categoria]) {
-      acc[categoria] = [];
-    }
-
-    acc[categoria].push(produto);
+  const productsByCategory = products.reduce((acc, product) => {
+    (acc[product.category] ??= []).push(product);
     return acc;
-  }, {} as Record<string, Produto[]>)
-  : {};
+  }, {} as Record<string, Product[]>);
 
-  const handleAddToCart = (produto: Produto) => {
-    console.log("Adicionado ao carrinho:", produto);
+  const handleAddToCart = (product: Product) => {
+    console.log("Added to cart:", product);
   };
 
   return (
     <>
       <nav className="navbar">
-        <h1>🛍️ Minha Loja</h1>
+        <h1>🛍️ My Store</h1>
       </nav>
 
       <div className="menu">
-        <div className="itens">
-          {Object.entries(produtosPorCategoria).map(([categoria, itens]) => (
-            <div key={categoria}>
-              <h2>{formatarCategoria(categoria)}</h2>
+        {loading && <p className="message">Carregando...</p>}
+        {error && <p className="message error">{error}</p>}
+        {!loading && !error && products.length === 0 && (
+          <p className="message">Não há produtos disponíveis.</p>
+        )}
 
-              {itens.map((produto) => (
-                <div className="item" key={produto.id}>
-                  <div className="info">
-                    <h3>{produto.name}</h3>
-                    <p>{produto.description}</p>
-                  </div>
-                  <span>R$ {produto.price}</span>
-                  
-            
-        {Object.entries(produtosPorCategoria).map(([categoria, itens]) => (
-          <section key={categoria} className="categoria-section">
-            <h2 className="categoria-titulo">{categoria}</h2>
-            <div className="itens-grid">
-              {itens.map((produto) => (
-                <div className="item-card" key={produto.id}>
+        {Object.entries(productsByCategory).map(([category, items]) => (
+          <section key={category} className="category-section">
+            <h2 className="category-title">{formatCategory(category)}</h2>
+
+            <div className="items-grid">
+              {items.map((product) => (
+                <div className="item-card" key={product.id}>
                   <div className="item-info">
-                    <h3>{produto.name}</h3>
-                    <p className="item-desc">{produto.description}</p>
-                    <span className="item-estoque">
-                      {produto.quantity > 0
-                        ? `${produto.quantity} em estoque`
-                        : "Fora de estoque"}
-                    </span>
+                    <h3>{product.name}</h3>
+                    <span className="item-price">{formatPrice(product.price)}</span>
                   </div>
-                  <div className="item-footer">
-                    <span className="item-preco">
-                      R$ {produto.price.toFixed(2)}
-                    </span>
-                    <button
-                      className="btn-add"
-                      disabled={produto.quantity === 0}
-                      onClick={() => handleAddToCart(produto)}
-                    >
-                      Adicionar
-                    </button>
-                  </div>
+                  <p className="item-desc">{product.description}</p>
                 </div>
               ))}
             </div>
