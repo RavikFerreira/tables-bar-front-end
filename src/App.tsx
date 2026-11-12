@@ -11,11 +11,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-<<<<<<< HEAD
-        <Route path="/" element={<RegisterProducts />} />
-=======
         <Route path="/" element={<Menu />} />
->>>>>>> b6a0106d3a00b24b31998e071ea21b840e509793
+        <Route path="/cadastrar" element={<RegisterProducts />} />
       </Routes>
     </BrowserRouter>
   );

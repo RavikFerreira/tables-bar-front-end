@@ -1,500 +1,426 @@
-*{
-  box-sizing: border-box;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
-}
-body{
-  overflow: hidden;
+/* ==========================================================================
+   RegisterProducts.css  (versão simples)
+   - Sem variáveis e sem prefixos: cada classe tem um nome direto.
+   - Para mudar uma cor, é só procurar o código dela (ex.: #4f46e5) e trocar.
+   ========================================================================== */
+
+/* ------------------------------ Página ----------------------------------- */
+
+.page {
+  min-height: 100vh;
+  background: #f4f5f9;
+  color: #1f2937;
+  font-family: system-ui, sans-serif;
 }
 
-.navbar {
-  width: 100%;
-  margin: 0 auto;
-  background-color: #ffd700;
-  color: rgb(0, 0, 0);
-  padding: 20px 40px;
-  border: 2px solid black;
+.page * {
   box-sizing: border-box;
+}
+
+/* ------------------------------ Botões ----------------------------------- */
+
+.btn {
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.btn-primary {
+  background: #e6d604;
+  color: #000000;
+}
+.btn-primary:hover {
+  background: #e6d604;
+}
+
+.btn-outline {
+  background: #fff;
+  border-color: #e5e7eb;
+  color: #1f2937;
+}
+.btn-outline:hover {
+  border-color: #e6d604;
+  color: #e6d604;
+}
+
+.btn-danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+.btn-danger:hover {
+  background: #b91c1c;
+  color: #fff;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: inherit;
+}
+.btn-ghost:hover {
+  background: rgba(128, 128, 128, 0.2);
+}
+
+/* ------------------------------ Navbar ----------------------------------- */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: #e6d604;
+  color: #000000;
 }
 
 .navbar h1 {
   margin: 0;
-  font-size: 1.5rem;
-}
-.menu{
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-  max-width: 1900px;
-  width: 100%;
-  margin: 0 auto;
-}
-.menu-button{
-  position: relative;
-  background-color: #ffd700;
-  border: 2px solid #000000;
-  color: #000000;
-  padding: 0.5rem 1.1rem;
-  border-radius:  6px;
-  cursor:  pointer;
-  font-size: 1rem;
-  transition: background-color 0.2s ease;
-  white-space: nowrap;
+  font-size: 18px;
 }
 
-.menu-button-logout{
-  background-color: #ffd700;
-  border: 2px solid rgb(0, 0, 0);
-  color: rgb(0, 0, 0);
-  padding: 0.5rem 1.1rem;
-  border-radius:  6px;
+.icon-btn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font-size: 18px;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.5s ease, color 0.2s ease;
-  white-space: nowrap;
 }
-.menu-overlay{
+.icon-btn:hover {
+  background: rgba(128, 128, 128, 0.2);
+}
+
+/* --------------------------- Menu lateral -------------------------------- */
+
+.drawer-backdrop {
   position: fixed;
-  top: 10;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
+  inset: 0;
   z-index: 100;
-  display: flex;
-  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.45);
 }
 
-.menu-sidebar{
-  background: #ffd700;
-  width: 300px;
+.drawer {
+  width: 280px;
   height: 100%;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
-  border: 2px solid rgb(0, 0, 0);
-  overflow-y: auto;
-
-}
-.menu-create-product{
-  background-color: #ffd700;
-  width: 100%;
-  height: 100%;
+  background: #fff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
-.button-create-product{
-  background-color: #ffd700;
-  color: #000000;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  cursor: pointer;
-  white-space: nowrap;
-  font-size: 1.4rem;
-  border-bottom: 1px solid #000000 ;
-}
-
-.search{
-  width: 100%;
-  margin: 0 auto;
-  padding: 2rem;
+.drawer-title {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 700;
 }
-.search-input{
-  flex: 1;
+
+.drawer-item {
+  display: block;
   width: 100%;
-  min-width: 0;
-  padding: 0.6rem 1.2rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 0.9rem;
-}
-.button-add{
-  background-color: #ffd700;
-  color: #000000;
+  padding: 14px 20px;
   border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius:  6px;
-  cursor: pointer;
-  white-space: nowrap;
-  
-}
-.loading,
-.empty {
-  width: 100%;
-  text-align: center;
-  border-collapse: collapse;
-  background: #ccc;
-  padding: 20px;
-}
-
-.table{
-  width: 100%;
-  padding: 0.8rem 1rem;
-  background: #ccc;
-  border-collapse: collapse;
-}
-
-.table th,
-.table td {
+  background: transparent;
+  color: #1f2937;
+  font-size: 15px;
   text-align: left;
-  padding: 0.8rem 1rem;
-  border-bottom: 1px solid #000000 ;
-}
-
-.table th{
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  color: #000000;
-  background-color: #ffd700;
-  border: 1px solid;
-}
-
-.table th:first-child,
-.table td {
-  width: 60px;
-  text-align: center;
-}
-
-.button-put,
-.button-delete{
-  border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
   cursor: pointer;
-  font-size: 0.8rem;
+}
+.drawer-item:hover {
+  background: #eef2ff;
+  color: #e6d604;
+}
+
+/* ------------------------------ Conteúdo --------------------------------- */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 24px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.toolbar h2 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.toolbar p {
+  margin: 4px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.search {
+  width: 280px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.search:focus {
+  border-color: #e6d604;
+  outline: none;
+}
+
+/* ------------------------------- Tabela ---------------------------------- */
+
+.card {
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table th {
+  padding: 14px 16px;
+  background: #f4f5f9;
+  color: #6b7280;
+  font-size: 12px;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.table td {
+  padding: 14px 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.table tbody tr:hover {
+  background: #eef2ff;
+}
+
+.product {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+}
+
+.thumb {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.tag {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #b8ac04;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
   white-space: nowrap;
 }
-
-.button-put{
-  background-color: #ffd700;
-  color: #000000;
+.badge-green {
+  background: #dcfce7;
+  color: #15803d;
+}
+.badge-yellow {
+  background: #fef3c7;
+  color: #b45309;
+}
+.badge-red {
+  background: #fee2e2;
+  color: #b91c1c;
 }
 
-.button-put:hover{
-  background-color: #63560f;
-}
-
-.button-delete{
-  background-color: #ff0101;
-  color: #000000;
-}
-
-.button-delete:hover{
-  background-color: #9e0e0e;
-}
-
-.register-overlay{
-  top: 0;
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  gap: 40px;
-  justify-content: center;
-}
-
-.register-overlay form{
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.register-overlay label{
-  font-size: 1rem;
-  color: #000000;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.register-overlay input{
-  padding: .8rem;
-  width: 100%;
-  border: 1px solid #000000;
-  border-radius: 6px;
-  font-size: 0.9rem;
-}
-
-.register-overlay input[type="file"] {
-  padding: 10px;
-  border: 1px dashed #b0b0b0;
-  background-color: #fafafa;
-  cursor: pointer;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.register-overlay input:hover{
-  border-color: #7a7a7a;
-  background-color: #f0f0f0;
-}
-
-.register-overlay input[type="file"]::file-selector-button {
-  padding: 6px 12px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 4px;
-  background-color: #ffd700;
-  color: #000000;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.register-overlay input[type="file"]::file-selector-button:hover{
-  background-color: #333;
-}
-
-.footer{
-  width: 100;
+.actions {
   display: flex;
   justify-content: flex-end;
-  gap: 0.6rem;
-  margin-top: 1.5rem;
-  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.cancel{
-  background: #ffd700;
-  border: 1px solid #000000;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.save{
-  background-color: #0bbb46;
-  border: 1px solid #000000;
-  padding: 0.5rem 1.2rem;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.save:hover{
-  background-color: #249c14;
-}
-.cancel:hover{
-  background-color: #b4b214;
-}
-
-.list-empty {
-  width: 100%;
-  text-align: center;
-  border-collapse: collapse;
-  background: #ccc;
-  padding: 20px;
-}
-
-.list-table{
-  width: 100%;
-  padding: 0.8rem 1rem;
-  background: #ccc;
-  border-collapse: collapse;
-}
-
-.list-table th,
-.list-table td {
-  text-align: left;
-  padding: 0.9rem 1.5rem;
-  border-bottom: 1px solid #000000 ;
-}
-
-.list-table th{
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  color: #000000;
-  background-color: #ffd700;
-  border: 1px solid;
-}
-
-.list-table th:first-child,
-.list-table td:first-child {
-  width: 100px;
+.empty {
+  padding: 56px 16px;
+  color: #6b7280;
   text-align: center;
 }
 
-.list-overlay{
-  width: 100%;
-  height: 20%;
-  display: flex;
-}
+/* -------------------------------- Modal ---------------------------------- */
 
-.list-acoes{
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
   display: flex;
-  gap: .3rem;
+  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.55);
 }
 
-@media (max-width: 900px) {
+.modal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  max-height: 92vh;
+  border-radius: 12px;
+  background: #fff;
+}
 
-  .navbar {
-    padding: 15px 20px;
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.modal-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* duas colunas */
+  gap: 16px;
+  padding: 20px 24px;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid #e5e7eb;
+  background: #f4f5f9;
+  border-radius: 0 0 12px 12px;
+}
+
+/* ------------------------------ Formulário ------------------------------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* "full" faz o campo ocupar as duas colunas */
+.full {
+  grid-column: 1 / -1;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 14px;
+}
+.input:focus {
+  border-color: #e6d604;
+  outline: none;
+}
+.input:disabled {
+  background: #f4f5f9;
+  color: #6b7280;
+}
+
+/* ------------------------- Upload de imagem ------------------------------ */
+
+.upload {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px;
+  border: 1px dashed #e5e7eb;
+  border-radius: 12px;
+  background: #f4f5f9;
+}
+
+.upload-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 28px;
+}
+
+.upload-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ---------------------------- Celular ------------------------------------ */
+
+@media (max-width: 700px) {
+  .col-desc {
+    display: none;
   }
 
-  .navbar h1 {
-    font-size: 1.3rem;
-  }
-
-  .menu {
-    gap: 0.7rem;
-  }
-
-  .register-overlay {
-    padding: 15px;
-    gap: 20px;
+  .modal-body {
+    grid-template-columns: 1fr; /* uma coluna só */
   }
 
   .search {
-    padding: 1.5rem;
-  }
-
-  .table {
-    min-width: 700px;
-  }
-
-  .list-table {
-    min-width: 700px;
+    width: 100%;
   }
 }
-
-@media (max-width: 600px) {
-
-  .navbar {
-    padding: 12px 15px;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .navbar h1 {
-    font-size: 1.2rem;
-    text-align: center;
-  }
-
-
-  .menu {
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-  }
-
-  .menu-button,
-  .menu-button-logout {
-    font-size: 0.85rem;
-    padding: 0.45rem 0.8rem;
-  }
-
-
-  .menu-sidebar {
-    width: 85%;
-    padding: 1rem;
-  }
-  .search {
-    width: 100%;
-    padding: 1rem;
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .search-input {
-    width: 100%;
-  }
-
-  .button-add {
-    width: 100%;
-  }
-
-
-  .register-overlay {
-    width: 100%;
-    padding: 15px;
-    display: block;
-  }
-
-  .register-overlay form {
-    width: 100%;
-  }
-
-  .register-overlay input {
-    width: 100%;
-  }
-
-
-  .footer {
-    width: 100%;
-    flex-direction: column;
-  }
-
-  .cancel,
-  .save {
-    width: 100%;
-  }
-
-
-  .list-overlay {
-    width: 100%;
-    display: block;
-  }
-
-  .list-acoes {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .list-acoes button {
-    width: 100%;
-  }
-
-
-  .button-create-product {
-    width: 100%;
-    font-size: 1.1rem;
-  }
-
-
-
-  .table,
-  .list-table {
-    min-width: 650px;
-  }
-}
-
-@media (max-width: 400px) {
-
-  .navbar {
-    padding: 10px;
-  }
-
-  .navbar h1 {
-    font-size: 1rem;
-  }
-
-  .menu-button,
-  .menu-button-logout {
-    font-size: 0.75rem;
-    padding: 0.4rem 0.6rem;
-  }
-
-  .search {
-    padding: 10px;
-  }
-
-  .register-overlay {
-    padding: 10px;
-  }
-
-  .table,
-  .list-table {
-    min-width: 600px;
-  }
-}
-
