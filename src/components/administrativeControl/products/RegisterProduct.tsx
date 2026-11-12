@@ -8,7 +8,7 @@ import "./RegisterProducts.css";
 /* ========================================================================== */
 
 // Produto como vem do backend
-interface Product {
+export interface Product {
   idProduct: number;
   name: string;
   price: number;
@@ -138,6 +138,7 @@ function RegisterProducts() {
   const [search, setSearch] = useState("");
 
   const [showMenu, setShowMenu] = useState(false);
+  const [showTables, setShowTables] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const [form, setForm] = useState<ProductForm>(EMPTY_FORM);
@@ -291,9 +292,6 @@ function RegisterProducts() {
               </button>
             </div>
 
-            <button className="drawer-item" onClick={() => setShowMenu(false)}>
-              📋 Listar produtos
-            </button>
             <button
               className="drawer-item"
               onClick={() => {
@@ -302,6 +300,9 @@ function RegisterProducts() {
               }}
             >
               ➕ Cadastrar produto
+            </button>
+            <button className="drawer-tables" onClick={() => navigate("/mesas")}>
+              📋 Listar mesas
             </button>
           </aside>
         </div>
