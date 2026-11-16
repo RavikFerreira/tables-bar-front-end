@@ -1,41 +1,31 @@
+
 import { useEffect, useState } from "react";
 import "./TablesBar.css";
 import { Product } from "../products/RegisterProducts";
 
-
-interface Payload{
-  idTable: number;
-  order: order;
-  state: state;
-}
-
-interface state{
-  state: state;
-}
-
-const STATE: Record<string, string> = {
-  LIVRE: "LIVRE",
-  OCUPADO: "OCUPADO",
-};
-
-interface order{
+interface Order {
   idOrder: string;
   products: Product;
 }
-/* ========================================================================== */
-/*  COMPONENTE                                                                */
-/* ========================================================================== */
+
+interface Payload {
+  idTable: number;
+  order: Order | null;
+  account: number;
+}
 
 function TablesBar() {
-  const [showMenu, setShowMenu] = useState(false);
   const [payloads, setPayloads] = useState<Payload[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const API_URL = "http://localhost:8083";
+
   useEffect(() => {
     async function loadPayload() {
       try {
-        setPayloads(await fetchPayload());
+        const data = await fetchPayload();
+        setPayloads(data);
       } catch (err) {
         console.error(err);
         setError("Não foi possível carregar as mesas.");
@@ -47,72 +37,126 @@ function TablesBar() {
     loadPayload();
   }, []);
 
-  const API_URL = "http://localhost:8083";
-/* ========================================================================== */
-/*  CHAMADA À API                                                             */
-/* ========================================================================== */
+  async function fetchPayload(): Promise<Payload[]> {
+    const response = await fetch(`${API_URL}/tables/list`);
 
-async function fetchPayload(): Promise<Payload[]> {
-  const response = await fetch(`${API_URL}/tables/list`);
-  if (!response.ok) throw new Error(`Erro ${response.status} ao buscar produtos`);
+    if (!response.ok) {
+      throw new Error(`Erro ${response.status} ao buscar mesas`);
+    }
 
-  const data = await response.json();
-  return Array.isArray(data) ? data : [];
-}
+    const data = await response.json();
 
-function groupByIdTable(payloads: Payload[]): [number, Payload[]][] {
-  const groups: Record<number, Payload[]> = {};
+    return Array.isArray(data) ? data : [];
+  }
 
-  payloads.forEach((payload) => {
-    (groups[payload.idTable] ??= []).push(payload);
-  });
+  // Agrupa os registros pelo ID da mesa
+  function groupByIdTable(payloads: Payload[]) {
+    const groups: Record<number, Payload[]> = {};
 
-  return Object.keys(groups)
-  .map(Number)
-  .sort((a, b) => a - b )
-  .map((id) : [number, Payload[]] => [id, groups[id]]);
-}
+    payloads.forEach((payload) => {
+      (groups[payload.idTable] ??= []).push(payload);
+    });
 
-const groups = groupByIdTable(payloads);
+    return Object.entries(groups)
+      .map(([id, items]) => ({
+        idTable: Number(id),
+        items
+      }))
+      .sort((a, b) => a.idTable - b.idTable);
+  }
 
+  const tables = groupByIdTable(payloads);
+
+  // Verifica se existe um pedido associado à mesa
+  function isOccupied(items: Payload[]): boolean {
+    return items.some((payload) => payload.order != null);
+  }
 
   return (
+    <main className="tables-container">
 
-      <main className="menu-container">
-        {loading && <p className="menu-message">Carregando...</p>}
-        {error && <p className="menu-message menu-error">{error}</p>}
-        {!loading && !error && payloads.length === 0 && (
-          <p className="menu-message">Não há produtos disponíveis.</p>
-        )}
+      <header className="tables-header">
+        <h1>🍴 Mesas do Restaurante</h1>
 
-        {groups.map(([category, items]) => (
-          <section key={category} className="menu-section">
+        <div className="tables-legend">
+          <span>
+            <i className="legend-dot livre-dot"></i>
+            Livre
+          </span>
 
-            <div className="menu-grid">
-              {items.map((payload) => {
-                const soldOut = payload.idTable <= 0;
+          <span>
+            <i className="legend-dot occupied-dot"></i>
+            Ocupada
+          </span>
+        </div>
+      </header>
 
-                return (
-                  <article
-                    key={payload.idTable}
-                    className={`menu-card ${soldOut ? "menu-card-soldout" : ""}`}>
-                
-                    <div className="menu-card-body">
-                      <h3 className="menu-name">{payload.idTable}</h3>
+      {loading && (
+        <p className="tables-message">Carregando mesas...</p>
+      )}
 
-                      <div className="menu-card-footer">
+      {error && (
+        <p className="tables-message tables-error">{error}</p>
+      )}
 
-                        {soldOut && <span className="menu-badge"></span>}
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </section>
-        ))}
-      </main>
-  )}
-    
+      {!loading && !error && tables.length === 0 && (
+        <p className="tables-message">
+          Não há mesas disponíveis.
+        </p>
+      )}
+
+      {!loading && !error && (
+        <div className="tables-grid">
+
+          {tables.map(({ idTable, items }) => {
+
+            const occupied = isOccupied(items);
+
+            return (
+              <article
+                key={idTable}
+                className={`tables-card ${
+                  occupied ? "tables-card-occupied" : "tables-card-free"
+                }`}
+              >
+                <h2 className="tables-id">
+                  Mesa {String(idTable).padStart(2, "0")}
+                </h2>
+                <div className="tables-account">
+                  <span>Valor da conta</span>
+
+                  <strong>
+                    {items
+                      .reduce((total, item) => total + (item.account || 0), 0)
+                      .toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL"
+                      })}
+                  </strong>
+                </div>
+
+                <div
+                  className={`tables-status ${
+                    occupied ? "status-occupied" : "status-free"
+                  }`}
+                >
+                  <span className="status-icon">
+                    {occupied ? "✕" : "✓"}
+                  </span>
+
+                  <span>
+                    {occupied ? "Ocupada" : "Livre"}
+                  </span>
+                </div>
+              </article>
+            );
+          })}
+
+        </div>
+      )}
+
+    </main>
+  );
+}
 
 export default TablesBar;
