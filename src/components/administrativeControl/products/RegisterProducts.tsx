@@ -1,6 +1,7 @@
+
+
 import { useEffect, useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
 import "./RegisterProducts.css";
 
 /* ========================================================================== */
@@ -129,16 +130,10 @@ async function saveProduct(form: ProductForm, image: string, editingId: number |
 /* ========================================================================== */
 
 function RegisterProducts() {
-  const navigate = useNavigate();
-
-  /* ------------------------------- Estados -------------------------------- */
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-
-  const [showMenu, setShowMenu] = useState(false);
-  const [showTables, setShowTables] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const [form, setForm] = useState<ProductForm>(EMPTY_FORM);
@@ -175,19 +170,6 @@ function RegisterProducts() {
       String(p.idProduct).includes(text)
   );
 
-  /* ----------------------------- Modal ------------------------------------ */
-
-  function clearForm() {
-    setForm(EMPTY_FORM);
-    setImageFile(null);
-    setPreview("");
-  }
-
-  function openCreateModal() {
-    clearForm();
-    setEditingId(null);
-    setShowModal(true);
-  }
 
   function openEditModal(product: Product) {
     setForm({
@@ -205,7 +187,19 @@ function RegisterProducts() {
     setShowModal(true);
   }
 
-  function closeModal() {
+  function openCreateModal() {
+        clearForm();
+        setEditingId(null);
+        setShowModal(true);
+    }
+    
+    function clearForm() {
+        setForm(EMPTY_FORM);
+        setImageFile(null);
+        setPreview("");
+    }
+    
+    function closeModal() {
     setShowModal(false);
     setEditingId(null);
     clearForm();
@@ -269,45 +263,7 @@ function RegisterProducts() {
   /* ------------------------------- Tela ----------------------------------- */
 
   return (
-    <div className="page">
-      {/* Barra superior */}
-      <header className="navbar">
-        <button className="icon-btn" onClick={() => setShowMenu(true)}>
-          ☰
-        </button>
-        <h1>⚙️ Painel Administrativo</h1>
-        <button className="btn btn-ghost" onClick={() => navigate("/")}>
-          Sair
-        </button>
-      </header>
-
-      {/* Menu lateral */}
-      {showMenu && (
-        <div className="drawer-backdrop" onClick={() => setShowMenu(false)}>
-          <aside className="drawer" onClick={(e) => e.stopPropagation()}>
-            <div className="drawer-title">
-              <span>Menu</span>
-              <button className="icon-btn" onClick={() => setShowMenu(false)}>
-                ✕
-              </button>
-            </div>
-
-            <button
-              className="drawer-item"
-              onClick={() => {
-                setShowMenu(false);
-                openCreateModal();
-              }}
-            >
-              ➕ Cadastrar produto
-            </button>
-            <button className="drawer-tables" onClick={() => navigate("/mesas")}>
-              📋 Listar mesas
-            </button>
-          </aside>
-        </div>
-      )}
-
+    <>
       {/* Conteúdo */}
       <main className="container">
         <div className="toolbar">
@@ -555,8 +511,7 @@ function RegisterProducts() {
           </div>
         </div>
       )}
-    </div>
-  );
-}
+  </>
+)}
 
 export default RegisterProducts;

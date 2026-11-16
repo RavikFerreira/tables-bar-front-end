@@ -1,0 +1,162 @@
+
+.page-navbar {
+  background: #f2f2f5;
+  color: #1f2937;
+  font-family: system-ui, sans-serif;
+}
+
+.page-navbar * {
+  box-sizing: border-box;
+}
+
+.btn {
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.btn-primary {
+  background: #e6d604;
+  color: #000000;
+}
+.btn-primary:hover {
+  background: #e6d604;
+}
+
+.btn-outline {
+  background: #fff;
+  border-color: #e5e7eb;
+  color: #1f2937;
+}
+.btn-outline:hover {
+  border-color: #e6d604;
+  color: #e6d604;
+}
+
+.btn-danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+.btn-danger:hover {
+  background: #b91c1c;
+  color: #fff;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: inherit;
+}
+.btn-ghost:hover {
+  background: rgba(128, 128, 128, 0.2);
+}
+
+.drawer-item {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  background: transparent;
+  color: #1f2937;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+}
+.drawer-item:hover {
+  background: #eef2ff;
+  color: #e6d604;
+}
+.drawer-tables {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  background: transparent;
+  color: #1f2937;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+}
+.drawer-tables:hover {
+  background: #eef2ff;
+  color: #e6d604;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: #e6d604;
+  color: #000000;
+}
+
+.navbar h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.icon-btn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font-size: 18px;
+  cursor: pointer;
+}
+.icon-btn:hover {
+  background: rgba(128, 128, 128, 0.2);
+}
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.drawer {
+  width: 280px;
+  height: 100%;
+  background: #fff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.drawer-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+  .col-desc {
+    display: none;
+  }
+
+  .modal-body {
+    grid-template-columns: 1fr; /* uma coluna só */
+  }
+
+  .search {
+    width: 100%;
+  }
+}
