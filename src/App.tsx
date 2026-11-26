@@ -13,10 +13,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Menu />} /> 
         <Route element={<NavBar/>}>
           <Route path="/cadastrar" element={<RegisterProducts />} />
-          <Route path="/mesas" element={<TablesBar />} />
+          <Route path="/" element={<TablesBar />} />
           <Route path="/pedidos" element={<Order />} />
         </Route>
       </Routes>
