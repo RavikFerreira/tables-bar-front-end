@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Menu.css";
+import { API_URL } from "../administrativeControl/tables/TablesBar";
 
 /* ========================================================================== */
 /*  TIPOS                                                                     */
@@ -15,14 +16,6 @@ interface Product {
   image?: string;
 }
 
-/* ========================================================================== */
-/*  CONSTANTES E FUNÇÕES AUXILIARES                                           */
-/* ========================================================================== */
-
-const API_URL = "http://localhost:8083";
-
-// A chave é o valor do enum (vem do backend), o texto é o que aparece na tela.
-// A ordem aqui é a ordem em que as categorias aparecem no cardápio.
 const CATEGORIES: Record<string, string> = {
   ESPETINHOS: "ESPETINHOS",
   BEBIDAS: "BEBIDAS",

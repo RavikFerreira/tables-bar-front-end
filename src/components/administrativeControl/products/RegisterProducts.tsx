@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import "./RegisterProducts.css";
 import { CATEGORIES } from "../../constants/categories";
+import { API_URL } from "../tables/TablesBar";
 
 /* ========================================================================== */
 /*  TIPOS                                                                     */
@@ -41,11 +42,7 @@ const EMPTY_FORM: ProductForm = {
   image: "",
 };
 
-/* ========================================================================== */
-/*  FUNÇÕES AUXILIARES                                                        */
-/* ========================================================================== */
 
-const API_URL = "http://localhost:8083";
 
 // Formata número como dinheiro: 10 -> "R$ 10,00"
 const formatPrice = (value: number) =>
