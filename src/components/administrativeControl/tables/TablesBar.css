@@ -1,0 +1,473 @@
+* {
+  box-sizing: border-box;
+}
+
+.tables-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 30px;
+
+  background: #dcdcdd;
+  color: rgb(0, 0, 0);
+}
+
+/* Formulário de cadastro */
+
+.tables {
+  max-width: 420px;
+  margin-bottom: 25px;
+}
+
+.tables-id-body {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.tables-id-body label {
+  font-weight: 600;
+}
+
+.tables-id-body .input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 2px solid #343638;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* Cabeçalho */
+
+.tables-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+
+  margin-bottom: 35px;
+}
+
+.tables-header h1 {
+  margin: 0;
+  font-size: 34px;
+  color: rgb(0, 0, 0);
+}
+
+/* Filtro por status */
+
+.tables-filter {
+  display: flex;
+  gap: 10px;
+}
+
+.tables-filter-btn {
+  padding: 10px 22px;
+  border: 2px solid #343638;
+  border-radius: 30px;
+  background: transparent;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.tables-filter-btn:hover {
+  background: rgba(52, 54, 56, 0.12);
+}
+
+.tables-filter-active,
+.tables-filter-active:hover {
+  background: #343638;
+  color: #ffffff;
+}
+
+/* Legenda */
+
+.tables-legend {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding: 15px 25px;
+  border: 2px solid #343638;
+  border-radius: 30px;
+}
+
+.tables-legend span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 18px;
+}
+
+.legend-dot {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+}
+
+.livre-dot {
+  background: #22c55e;
+}
+
+.occupied-dot {
+  background: #ef3035;
+}
+
+/* Grade */
+
+.tables-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+/* Card da mesa */
+
+.tables-card {
+  min-height: 190px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 18px 20px;
+
+  border: 4px solid;
+  border-radius: 10px;
+
+  transition: transform 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+.tables-card {
+  cursor: pointer;
+}
+
+.tables-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Modal de produtos da mesa */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal {
+  width: 100%;
+  max-width: 460px;
+  max-height: 85vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 24px;
+  background: linear-gradient(145deg, #391d20, #2c1417);
+  border: 4px solid #ef3035;
+  border-radius: 10px;
+  color: #000000;
+  box-shadow: 0 0 25px rgba(239, 48, 53, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.modal-close {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: #ed252b;
+  color: #ffffff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  filter: brightness(1.15);
+}
+
+.modal-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Produtos da mesa: cartão claro com texto preto */
+
+.modal-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 8px;
+  padding: 10px 14px;
+  background: #f1f1f2;
+  color: #000000;
+  border-radius: 8px;
+  font-size: 1.05rem;
+}
+
+.modal-item-name {
+  flex: 1;
+  font-weight: 600;
+  color: #000000;
+}
+
+.modal-item-quantity,
+.modal-item-price {
+  color: #000000;
+  white-space: nowrap;
+}
+
+.modal-item-account {
+  color: #000000;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.modal-empty {
+  margin: 20px 0;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.modal-subtitle {
+  margin: 22px 0 6px;
+  padding-top: 14px;
+  border-top: 2px solid rgba(255, 255, 255, 0.25);
+  font-size: 1.1rem;
+}
+
+.modal-catalog {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.modal-catalog .modal-item {
+  align-items: center;
+}
+
+.modal-catalog .modal-item-name {
+  flex: 1;
+}
+
+.modal-add-btn {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background: #16b84e;
+  color: #000000;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modal-add-btn:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.modal-add-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 2px solid rgba(0, 0, 0, 0.25);
+  font-size: 1.1rem;
+}
+
+.modal-footer strong {
+  color: #16b84e;
+  font-size: 1.5rem;
+}
+
+/* Mesa livre */
+
+.tables-card-free {
+  background: linear-gradient(
+    145deg,
+    #192c21,
+    #10291b
+  );
+
+  border-color: #22c55e;
+
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.15);
+}
+
+/* Mesa ocupada */
+
+.tables-card-occupied {
+  background: linear-gradient(
+    145deg,
+    #391d20,
+    #2c1417
+  );
+
+  border-color: #ef3035;
+
+  box-shadow: 0 0 15px rgba(239, 48, 53, 0.15);
+}
+
+/* Número da mesa */
+
+.tables-id {
+  width: 100%;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  gap: 30px;
+}
+
+.btn-excluir {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #ed252b;
+  color: #000000;
+}
+
+.btn-excluir:hover {
+  filter: brightness(1.15);
+}
+
+/* Valor da conta */
+
+.tables-account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.tables-account span {
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.tables-account strong {
+  color: #ffd700;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Status */
+
+.tables-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 22px;
+  border-radius: 30px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.status-free {
+  background: #16b84e;
+}
+
+.status-occupied {
+  background: #ed252b;
+}
+
+.status-icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: white;
+  color: #16b84e;
+  font-size: 20px;
+}
+
+.status-occupied .status-icon {
+  color: #ed252b;
+}
+
+/* Mensagens */
+
+.tables-message {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 40px;
+}
+
+.tables-error {
+  color: #ef4444;
+}
+
+/* Responsividade */
+
+@media (max-width: 1000px) {
+  .tables-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .tables-container {
+    padding: 15px;
+  }
+
+  .tables-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .tables-header h1 {
+    font-size: 25px;
+  }
+
+  .tables-grid {
+    grid-template-columns: 1fr;
+  }
+}

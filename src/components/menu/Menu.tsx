@@ -1,89 +1,154 @@
-import './Menu.css';
 import { useEffect, useState } from "react";
+import "./Menu.css";
 
-interface Produto {
-  id: number;
+/* ========================================================================== */
+/*  TIPOS                                                                     */
+/* ========================================================================== */
+
+interface Product {
+  idProduct: number;
   name: string;
   price: number;
   quantity: number;
-  description: string;
   category: string;
+  description: string;
+  image?: string;
 }
 
+/* ========================================================================== */
+/*  CONSTANTES E FUNÇÕES AUXILIARES                                           */
+/* ========================================================================== */
+
+const API_URL = "http://localhost:8083";
+
+// A chave é o valor do enum (vem do backend), o texto é o que aparece na tela.
+// A ordem aqui é a ordem em que as categorias aparecem no cardápio.
+const CATEGORIES: Record<string, string> = {
+  ESPETINHOS: "ESPETINHOS",
+  BEBIDAS: "BEBIDAS",
+  PORCOES: "PORÇÕES",
+  BEBIDAS_ALCOOLICAS: "BEBIDAS ALCOÓLICAS",
+};
+
+const formatCategory = (category: string) => CATEGORIES[category] ?? category;
+
+// Formata número como dinheiro: 10 -> "R$ 10,00"
+const formatPrice = (value: number | string) =>
+  Number(value).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+// Se a imagem já for um link completo usa ele, senão junta com o endereço da API
+const imageUrl = (image: string) =>
+  image.startsWith("http") ? image : `${API_URL}${image}`;
+
+// Agrupa os produtos por categoria, na ordem de CATEGORIES.
+// Categorias que não estão na lista aparecem no final.
+function groupByCategory(products: Product[]): [string, Product[]][] {
+  const groups: Record<string, Product[]> = {};
+
+  products.forEach((product) => {
+    (groups[product.category] ??= []).push(product);
+  });
+
+  const known = Object.keys(CATEGORIES).filter((category) => groups[category]);
+  const others = Object.keys(groups).filter((category) => !(category in CATEGORIES));
+
+  return [...known, ...others].map((category) => [category, groups[category]]);
+}
+
+/* ========================================================================== */
+/*  CHAMADA À API                                                             */
+/* ========================================================================== */
+
+async function fetchProducts(): Promise<Product[]> {
+  const response = await fetch(`${API_URL}/product/list`);
+  if (!response.ok) throw new Error(`Erro ${response.status} ao buscar produtos`);
+
+  const data = await response.json();
+  return Array.isArray(data) ? data : [];
+}
+
+/* ========================================================================== */
+/*  COMPONENTE                                                                */
+/* ========================================================================== */
+
 function Menu() {
-  const [produtos, setProdutos] = useState<Produto[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
+  // Roda uma vez, quando a tela abre
   useEffect(() => {
-    fetch("http://localhost:8083/product/list")
-      .then((res) => res.json())
-      .then((data) => setProdutos(data))
-      .catch((err) => console.error(err));
-  }, []);
-
-  const produtosPorCategoria = produtos.reduce((acc, produto) => {
-    const categoria = produto.category;
-
-    if (!acc[categoria]) {
-      acc[categoria] = [];
+    async function loadProducts() {
+      try {
+        setProducts(await fetchProducts());
+      } catch (err) {
+        console.error(err);
+        setError("Não foi possível carregar o cardápio.");
+      } finally {
+        setLoading(false);
+      }
     }
 
-    acc[categoria].push(produto);
-    return acc;
-  }, {} as Record<string, Produto[]>);
+    loadProducts();
+  }, []);
 
-  const handleAddToCart = (produto: Produto) => {
-    console.log("Adicionado ao carrinho:", produto);
-  };
+  const groups = groupByCategory(products);
 
   return (
-    <>
-      <nav className="navbar">
+    <div className="menu-page">
+      <header className="menu-navbar">
         <h1>🛍️ Minha Loja</h1>
-      </nav>
+      </header>
 
-      <div className="menu">
-        {Object.entries(produtosPorCategoria).map(([categoria, itens]) => (
-          <section key={categoria} className="categoria-section">
-            <h2 className="categoria-titulo">{categoria}</h2>
-            <div className="itens-grid">
-              {itens.map((produto) => (
-<<<<<<< HEAD
-                <div className="item" key={produto.id}>
-                  <h3>{produto.name}</h3>
-                  <h5>{produto.description}</h5>
-                  <span>R$ {produto.price}</span>
-                 
-=======
-                <div className="item-card" key={produto.id}>
-                  <div className="item-info">
-                    <h3>{produto.name}</h3>
-                    <p className="item-desc">{produto.description}</p>
-                    <span className="item-estoque">
-                      {produto.quantity > 0
-                        ? `${produto.quantity} em estoque`
-                        : "Fora de estoque"}
-                    </span>
-                  </div>
-                  <div className="item-footer">
-                    <span className="item-preco">
-                      R$ {produto.price.toFixed(2)}
-                    </span>
-                    <button
-                      className="btn-add"
-                      disabled={produto.quantity === 0}
-                      onClick={() => handleAddToCart(produto)}
-                    >
-                      Adicionar
-                    </button>
-                  </div>
->>>>>>> eae947bb06db76b0a75df2b50c22a4969f2b2b09
-                </div>
-              ))}
+      <main className="menu-container">
+        {loading && <p className="menu-message">Carregando...</p>}
+        {error && <p className="menu-message menu-error">{error}</p>}
+        {!loading && !error && products.length === 0 && (
+          <p className="menu-message">Não há produtos disponíveis.</p>
+        )}
+
+        {groups.map(([category, items]) => (
+          <section key={category} className="menu-section">
+            <h2 className="menu-category">{formatCategory(category)}</h2>
+
+            <div className="menu-grid">
+              {items.map((product) => {
+                const soldOut = product.quantity <= 0;
+
+                return (
+                  <article
+                    key={product.idProduct}
+                    className={`menu-card ${soldOut ? "menu-card-soldout" : ""}`}
+                  >
+                    {/* Imagem à esquerda (ou um ícone, se o produto não tiver) */}
+                    {product.image ? (
+                      <img
+                        className="menu-image"
+                        src={imageUrl(product.image)}
+                        alt={product.name}
+                      />
+                    ) : (
+                      <div className="menu-image menu-image-empty">🍽️</div>
+                    )}
+
+                    {/* Textos à direita: nome, descrição e, embaixo, preço */}
+                    <div className="menu-card-body">
+                      <h3 className="menu-name">{product.name}</h3>
+                      <p className="menu-description">{product.description}</p>
+
+                      <div className="menu-card-footer">
+                        <span className="menu-price">{formatPrice(product.price)}</span>
+                        {soldOut && <span className="menu-badge">Esgotado</span>}
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </section>
         ))}
-      </div>
-    </>
+      </main>
+    </div>
   );
 }
 
