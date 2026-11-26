@@ -30,9 +30,9 @@ const EMPTY_FORM: PayloadForm = {
   account: "",
 };
 
-const API_URL = "http://localhost:8083";
+export const API_URL = process.env.REACT_APP_API_URL;
 
-async function fetchPayload(): Promise<Payload[]> {
+export async function fetchPayload(): Promise<Payload[]> {
   const response = await fetch(`${API_URL}/tables/list`);
 
   if (!response.ok) {
