@@ -1,4 +1,4 @@
--------------------------- Página ----------------------------------- */
+
 
 .menu-page {
   min-height: 100vh;
@@ -11,7 +11,6 @@
   box-sizing: border-box;
 }
 
-/* ------------------------------ Navbar ----------------------------------- */
 
 .menu-navbar {
   position: sticky;
@@ -29,7 +28,6 @@
 
 }
 
-/* ------------------------------ Conteúdo --------------------------------- */
 
 .menu-container {
   max-width: 1100px;
@@ -47,8 +45,6 @@
   color: #b91c1c;
 }
 
-/* ------------------------------ Categorias ------------------------------- */
-
 .menu-section {
   margin-bottom: 36px;
 }
@@ -62,16 +58,12 @@
   letter-spacing: 0.04em;
 }
 
-/* Cards se encaixam sozinhos: quantas colunas couberem, mínimo 300px cada */
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 12px;
 }
 
-/* -------------------------------- Cards ---------------------------------- */
-
-/* Card em linha: imagem à esquerda, textos à direita */
 .menu-card {
   display: flex;
   gap: 12px;
@@ -84,7 +76,7 @@
   border-color: #cec005;
 }
 
-/* Imagem quadrada e pequena, mas grande o bastante para ver bem */
+
 .menu-image {
   flex-shrink: 0;
   width: 96px;
@@ -93,7 +85,6 @@
   object-fit: cover;
 }
 
-/* Quando o produto não tem imagem */
 .menu-image-empty {
   display: flex;
   align-items: center;
@@ -102,12 +93,11 @@
   font-size: 32px;
 }
 
-/* Textos: nome em cima, descrição no meio, preço embaixo */
 .menu-card-body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  min-width: 0; /* deixa o texto quebrar em vez de estourar o card */
+  min-width: 0;
 }
 
 .item-card:hover {
@@ -179,12 +169,12 @@
   overflow: hidden;
 }
 
-/* Rodapé do card: preço (e "Esgotado", se for o caso) */
+
 .menu-card-footer {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: auto; /* empurra para o fim do card */
+  margin-top: auto; 
 }
 
 .menu-price {
@@ -193,7 +183,6 @@
   font-weight: 700;
 }
 
-/* Produto sem estoque */
 .menu-card-soldout {
   opacity: 0.6;
 }
@@ -207,7 +196,6 @@
   font-weight: 600;
 }
 
-/* ---------------------------- Celular ------------------------------------ */
 
 @media (max-width: 600px) {
   .menu-container {
