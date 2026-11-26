@@ -40,7 +40,11 @@ function NavBar(){
                             ➕ Cadastrar produto
                         </button>
                         <button className="drawer-tables" onClick={() => closeModal("/mesas")}>
-                            📋 Listar mesas
+                            📋 Mesas
+                        </button>
+
+                        <button className="drawer-tables" onClick={() => closeModal("/pedidos")}>
+                            📋 Pedidos
                         </button>
                     </aside>
                 </div>

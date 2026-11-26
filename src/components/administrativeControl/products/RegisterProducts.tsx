@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import "./RegisterProducts.css";
+import { CATEGORIES } from "../../constants/categories";
 
 /* ========================================================================== */
 /*  TIPOS                                                                     */
@@ -46,14 +47,6 @@ const EMPTY_FORM: ProductForm = {
 
 const API_URL = "http://localhost:8083";
 
-// Categorias: a chave é o valor do enum (enviado ao backend), o texto é o que aparece na tela
-const CATEGORIES: Record<string, string> = {
-  ESPETINHOS: "ESPETINHOS",
-  BEBIDAS: "BEBIDAS",
-  PORCOES: "PORÇÕES",
-  BEBIDAS_ALCOOLICAS: "BEBIDAS ALCOÓLICAS",
-};
-
 // Formata número como dinheiro: 10 -> "R$ 10,00"
 const formatPrice = (value: number) =>
   value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -68,10 +61,6 @@ function getStockBadge(quantity: number) {
   if (quantity <= 5) return { text: "Estoque baixo", color: "badge-yellow" };
   return { text: "Em estoque", color: "badge-green" };
 }
-
-/* ========================================================================== */
-/*  CHAMADAS À API                                                            */
-/* ========================================================================== */
 
 async function fetchProducts(): Promise<Product[]> {
   const response = await fetch(`${API_URL}/product/list`);
@@ -125,10 +114,6 @@ async function saveProduct(form: ProductForm, image: string, editingId: number |
   }
 }
 
-/* ========================================================================== */
-/*  COMPONENTE                                                                */
-/* ========================================================================== */
-
 function RegisterProducts() {
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -155,12 +140,10 @@ function RegisterProducts() {
     }
   }
 
-  // Roda uma vez, quando a tela abre
   useEffect(() => {
     loadProducts();
   }, []);
 
-  /* ------------------------------ Busca ----------------------------------- */
 
   const text = search.toLowerCase();
   const filteredProducts = products.filter(
@@ -205,9 +188,6 @@ function RegisterProducts() {
     clearForm();
   }
 
-  /* ----------------------------- Formulário ------------------------------- */
-
-  // Um único handler para todos os campos: usa o "name" do input
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) {
@@ -259,8 +239,6 @@ function RegisterProducts() {
       alert(error instanceof Error ? error.message : "Erro ao excluir produto");
     }
   }
-
-  /* ------------------------------- Tela ----------------------------------- */
 
   return (
     <>
@@ -362,8 +340,7 @@ function RegisterProducts() {
           )}
         </div>
       </main>
-
-      {/* Modal de cadastro / edição */}
+      
       {showModal && (
         <div className="modal-backdrop" onClick={closeModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>

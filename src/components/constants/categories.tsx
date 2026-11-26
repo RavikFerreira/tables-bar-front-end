@@ -1,0 +1,8 @@
+
+
+export const CATEGORIES: Record<string, string> = {
+  ESPETINHOS: "ESPETINHOS",
+  BEBIDAS: "BEBIDAS",
+  PORCOES: "PORÇÕES",
+  BEBIDAS_ALCOOLICAS: "BEBIDAS ALCOÓLICAS",
+};

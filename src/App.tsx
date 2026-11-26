@@ -8,6 +8,7 @@ import Register from './components/loginAndRegistrationScreen/register/Register'
 import TablesBar from './components/administrativeControl/tables/TablesBar';
 import NavBar from './components/navbar/NavBar';
 import RegisterProducts from './components/administrativeControl/products/RegisterProducts';
+import Order from './components/administrativeControl/orders/Order';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route element={<NavBar/>}>
           <Route path="/cadastrar" element={<RegisterProducts />} />
           <Route path="/mesas" element={<TablesBar />} />
+          <Route path="/pedidos" element={<Order />} />
         </Route>
       </Routes>
     </BrowserRouter>
