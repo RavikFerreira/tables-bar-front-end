@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Order.css";
+import { API_URL } from "../tables/TablesBar";
 
 /* ========================================================================== */
 /*  TIPOS                                                                     */
@@ -26,11 +27,7 @@ interface Feedback {
   text: string;
 }
 
-/* ========================================================================== */
-/*  CONSTANTES E FUNÇÕES AUXILIARES                                           */
-/* ========================================================================== */
 
-const API_URL = "http://localhost:8083";
 
 // Valor usado no filtro para mostrar todas as categorias
 const ALL = "TODAS";
