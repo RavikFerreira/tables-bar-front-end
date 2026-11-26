@@ -1,49 +1,16 @@
-<<<<<<< HEAD
-.navbar {
-<<<<<<< HEAD
-  background-color: #ffd700;
-  color: rgb(0, 0, 0);
-  padding: 20px 40px;
-  border: 2px solid black;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  margin: 0;
-  padding: 0;
-=======
-  background-color: #1a1a1a;
-  color: #fff;
-  padding: 1.2rem 2rem;
-=======
-/* ==========================================================================
-   Menu.css  (versão simples)
-   - Todas as classes começam com "menu-" para não misturar com as outras telas
-     (o CSS do React vale para o projeto inteiro, não só para um arquivo).
-   - Para mudar uma cor, procure o código dela (ex.: #4f46e5) e troque.
-   ========================================================================== */
-
-/* ------------------------------ Página ----------------------------------- */
 
 .menu-page {
   min-height: 100vh;
   background: #f4f5f9;
   color: #1f2937;
   font-family: system-ui, sans-serif;
->>>>>>> develop
 }
 
 .menu-page * {
   box-sizing: border-box;
 }
 
-/* ------------------------------ Navbar ----------------------------------- */
 
 .menu-navbar {
   position: sticky;
@@ -56,15 +23,11 @@
 
 .menu-navbar h1 {
   margin: 0;
-<<<<<<< HEAD
   font-size: 1.5rem;
->>>>>>> eae947bb06db76b0a75df2b50c22a4969f2b2b09
-=======
   font-size: 20px;
->>>>>>> develop
+
 }
 
-/* ------------------------------ Conteúdo --------------------------------- */
 
 .menu-container {
   max-width: 1100px;
@@ -82,8 +45,6 @@
   color: #b91c1c;
 }
 
-/* ------------------------------ Categorias ------------------------------- */
-
 .menu-section {
   margin-bottom: 36px;
 }
@@ -97,16 +58,12 @@
   letter-spacing: 0.04em;
 }
 
-/* Cards se encaixam sozinhos: quantas colunas couberem, mínimo 300px cada */
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 12px;
 }
 
-/* -------------------------------- Cards ---------------------------------- */
-
-/* Card em linha: imagem à esquerda, textos à direita */
 .menu-card {
   display: flex;
   gap: 12px;
@@ -119,7 +76,7 @@
   border-color: #cec005;
 }
 
-/* Imagem quadrada e pequena, mas grande o bastante para ver bem */
+
 .menu-image {
   flex-shrink: 0;
   width: 96px;
@@ -128,7 +85,6 @@
   object-fit: cover;
 }
 
-/* Quando o produto não tem imagem */
 .menu-image-empty {
   display: flex;
   align-items: center;
@@ -137,20 +93,18 @@
   font-size: 32px;
 }
 
-/* Textos: nome em cima, descrição no meio, preço embaixo */
 .menu-card-body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  min-width: 0; /* deixa o texto quebrar em vez de estourar o card */
+  min-width: 0;
 }
 
-<<<<<<< HEAD
 .item-card:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transform: translateY(-2px);
 }
-<<<<<<< HEAD
+
 .item h5 {
  
   margin: 40px 0 50px;
@@ -162,9 +116,7 @@
 .item {
   width: 100%;
   max-width: 500px;
-=======
->>>>>>> eae947bb06db76b0a75df2b50c22a4969f2b2b09
-
+}
 .item-info h3 {
   margin: 0 0 0.4rem;
   font-size: 1.05rem;
@@ -188,21 +140,13 @@
   margin-top: 1rem;
 }
 
-<<<<<<< HEAD
 .item h3 {
   margin: 0;
   font-size: 20px;
-=======
-.item-preco {
-=======
-.menu-name {
-  margin: 0;
-  font-size: 15px;
->>>>>>> develop
   font-weight: 700;
 }
 
-<<<<<<< HEAD
+
 .btn-add {
   background-color: #1a1a1a;
   color: #fff;
@@ -212,9 +156,8 @@
   cursor: pointer;
   font-size: 0.85rem;
   transition: background-color 0.2s ease;
->>>>>>> eae947bb06db76b0a75df2b50c22a4969f2b2b09
-=======
-/* Descrição limitada a 2 linhas */
+
+}
 .menu-description {
   margin: 4px 0 8px;
   color: #6b7280;
@@ -224,15 +167,14 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
->>>>>>> develop
 }
 
-/* Rodapé do card: preço (e "Esgotado", se for o caso) */
+
 .menu-card-footer {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: auto; /* empurra para o fim do card */
+  margin-top: auto; 
 }
 
 .menu-price {
@@ -241,7 +183,6 @@
   font-weight: 700;
 }
 
-/* Produto sem estoque */
 .menu-card-soldout {
   opacity: 0.6;
 }
@@ -255,7 +196,6 @@
   font-weight: 600;
 }
 
-/* ---------------------------- Celular ------------------------------------ */
 
 @media (max-width: 600px) {
   .menu-container {

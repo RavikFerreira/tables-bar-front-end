@@ -8,6 +8,7 @@ import TablesBar from './components/administrativeControl/tables/TablesBar';
 import NavBar from './components/navbar/NavBar';
 import RegisterProducts from './components/administrativeControl/products/RegisterProducts';
 import Order from './components/administrativeControl/orders/Order';
+import Menu from './components/menu/Menu';
 
 function App() {
   return (
